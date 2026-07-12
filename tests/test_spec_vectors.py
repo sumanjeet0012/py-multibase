@@ -1,11 +1,10 @@
+import ast
 import csv
 from pathlib import Path
-import ast
 
 import pytest
 
-from multibase.multibase import encode, decode, is_encoding_supported
-
+from multibase.multibase import decode, encode, is_encoding_supported
 
 VECTOR_FILES = list(Path(__file__).parent.parent.joinpath("multibase-spec", "tests").glob("*.csv"))
 
@@ -19,10 +18,10 @@ def get_vectors():
                 header = next(reader)
             except StopIteration:
                 continue
-            
+
             if not header or len(header) < 2:
                 continue
-                
+
             decode_only = header[0] == "non-canonical encoding"
             # Unescape characters like \x00 safely
             raw_test_value = header[1]
